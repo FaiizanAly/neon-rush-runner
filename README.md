@@ -6,7 +6,7 @@ Race through a glowing metro track, dodge obstacles, collect coins, unlock achie
 
 ## Live Demo
 
-Deploy this project on Vercel, Netlify, GitHub Pages, Cloudflare Pages, or any static hosting service.
+[Play Game](https://neon-rush-runner.vercel.app/)
 
 ## Features
 
