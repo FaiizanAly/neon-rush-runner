@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
+    <meta name="theme-color" content="#060912">
+    <meta name="description" content="Neon Rush, a Three.js endless runner game.">
+    <title>Neon Rush Runner</title>
+    <link rel="stylesheet" href="style.css?v=3">
+</head>
+
+<body>
+    <main id="gameRoot" aria-label="Neon Rush Runner">
+        <div id="gameViewport" class="viewport"></div>
+        <div id="weatherOverlay" class="weather-overlay"></div>
+        <div id="speedOverlay" class="speed-overlay"></div>
+
+        <section id="loadingScreen" class="screen is-active">
+            <div class="loader-panel">
+                <div class="logo-mark">NR</div>
+                <h1>Neon Rush</h1>
+                <p id="loadingTip" class="loading-tip">Charging rails...</p>
+                <div class="progress-shell" aria-label="Loading">
+                    <span id="loadingProgress" class="progress-fill"></span>
+                </div>
+                <span id="loadingPercent" class="loading-percent">0%</span>
+            </div>
+        </section>
+
+        <section id="mainMenu" class="screen">
+            <div class="menu-panel">
+                <div class="brand-row">
+                    <div class="logo-mark compact">NR</div>
+                    <div>
+                        <h2>Neon Rush</h2>
+                        <span>Metro Sprint</span>
+                    </div>
+                </div>
+
+                <div class="menu-stats">
+                    <div>
+                        <span>Best</span>
+                        <strong id="menuBest">0</strong>
+                    </div>
+                    <div>
+                        <span>Bank</span>
+                        <strong id="menuBank">0</strong>
+                    </div>
+                </div>
+
+                <div class="character-select" aria-label="Character select">
+                    <button class="avatar-button is-selected" data-character="pulse" aria-label="Pulse">
+                        <span class="avatar-dot pulse"></span>
+                        <strong>Pulse</strong>
+                    </button>
+                    <button class="avatar-button" data-character="nova" aria-label="Nova">
+                        <span class="avatar-dot nova"></span>
+                        <strong>Nova</strong>
+                    </button>
+                    <button class="avatar-button" data-character="flux" aria-label="Flux">
+                        <span class="avatar-dot flux"></span>
+                        <strong>Flux</strong>
+                    </button>
+                </div>
+
+                <button id="playBtn" class="primary-button">Play</button>
+                <p class="creator-credit">
+                    Created with Love by
+                    <a href="https://www.instagram.com/faiizanaly/" target="_blank" rel="noopener noreferrer">Faizan Ali</a>
+                </p>
+
+                <div class="menu-actions">
+                    <button id="settingsBtn" class="ghost-button">Settings</button>
+                    <button id="fullscreenBtn" class="ghost-button">Fullscreen</button>
+                </div>
+
+                <div id="dailyReward" class="reward-strip">
+                    <div>
+                        <span>Daily</span>
+                        <strong id="dailyRewardText">150 coins</strong>
+                    </div>
+                    <button id="claimDailyBtn" class="mini-button">Claim</button>
+                </div>
+
+                <div class="achievement-list" aria-label="Achievements">
+                    <div class="achievement-title">Achievements</div>
+                    <div id="achievementList"></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="settingsPanel" class="screen modal-screen">
+            <div class="modal-panel">
+                <h2>Settings</h2>
+                <button id="soundToggleBtn" class="setting-row">
+                    <span>Sound</span>
+                    <strong id="soundState">On</strong>
+                </button>
+                <button id="qualityToggleBtn" class="setting-row">
+                    <span>Quality</span>
+                    <strong id="qualityState">High</strong>
+                </button>
+                <button id="closeSettingsBtn" class="primary-button">Done</button>
+            </div>
+        </section>
+
+        <section id="hud" class="hud" aria-live="polite">
+            <div class="hud-stats">
+                <div class="hud-card">
+                    <span>Score</span>
+                    <strong id="scoreValue">0</strong>
+                </div>
+                <div class="hud-card">
+                    <span>Coins</span>
+                    <strong id="coinValue">0</strong>
+                </div>
+                <div class="hud-card wide">
+                    <span>Distance</span>
+                    <strong id="distanceValue">0 m</strong>
+                </div>
+                <div class="hud-card combo">
+                    <span>x</span>
+                    <strong id="multiplierValue">1</strong>
+                </div>
+            </div>
+            <div id="powerupBar" class="powerup-bar"></div>
+            <button id="pauseBtn" class="icon-button" aria-label="Pause">II</button>
+        </section>
+
+        <div id="toastStack" class="toast-stack" aria-live="assertive"></div>
+
+        <section id="pauseMenu" class="screen modal-screen">
+            <div class="modal-panel">
+                <h2>Paused</h2>
+                <button id="resumeBtn" class="primary-button">Resume</button>
+                <button id="restartPauseBtn" class="ghost-button">Restart</button>
+                <button id="quitPauseBtn" class="ghost-button">Quit</button>
+            </div>
+        </section>
+
+        <section id="gameOverScreen" class="screen modal-screen">
+            <div class="modal-panel score-panel">
+                <h2>Run Complete</h2>
+                <div class="final-grid">
+                    <div>
+                        <span>Score</span>
+                        <strong id="finalScore">0</strong>
+                    </div>
+                    <div>
+                        <span>Coins</span>
+                        <strong id="finalCoins">0</strong>
+                    </div>
+                    <div>
+                        <span>Best</span>
+                        <strong id="finalBest">0</strong>
+                    </div>
+                    <div>
+                        <span>Distance</span>
+                        <strong id="finalDistance">0 m</strong>
+                    </div>
+                </div>
+                <button id="restartBtn" class="primary-button">Restart</button>
+                <button id="menuBtn" class="ghost-button">Menu</button>
+            </div>
+        </section>
+
+        <nav id="touchControls" class="touch-controls" aria-label="Touch controls">
+            <button class="touch-btn left" data-action="left" aria-label="Left"></button>
+            <button class="touch-btn right" data-action="right" aria-label="Right"></button>
+            <button class="touch-btn up" data-action="jump" aria-label="Jump"></button>
+            <button class="touch-btn down" data-action="slide" aria-label="Slide"></button>
+        </nav>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="audio.js"></script>
+    <script src="effects.js"></script>
+    <script src="controls.js"></script>
+    <script src="player.js"></script>
+    <script src="world.js"></script>
+    <script src="ui.js"></script>
+    <script src="main.js"></script>
+</body>
+
+</html>
